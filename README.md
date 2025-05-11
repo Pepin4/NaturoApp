@@ -32,4 +32,4 @@ mvn spring-boot:run
 Accède à l’application via http://localhost:8080
 
 ✨ Auteur
-👨‍💻 Martel Dimitri - LinkedIn
+👨‍💻 Martel Dimitri
