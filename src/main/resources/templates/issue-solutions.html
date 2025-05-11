@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      data-layout-decorate="layout">
+<head>
+	  <!-- 
+		 _____                                _       _   _                 
+		|_   _|                              | |     | | (_)                
+		  | |  ___ ___ _   _  ___   ___  ___ | |_   _| |_ _  ___  _ __  ___ 
+		  | | / __/ __| | | |/ _ \ / __|/ _ \| | | | | __| |/ _ \| '_ \/ __|
+		 _| |_\__ \__ \ |_| |  __/ \__ \ (_) | | |_| | |_| | (_) | | | \__ \
+		|_____|___/___/\__,_|\___| |___/\___/|_|\__,_|\__|_|\___/|_| |_|___/
+		                                                                    	                           
+	  -->
+    <meta charset="UTF-8">
+    <title>Gestion des Problèmes</title>
+	<script src="/js/issue-management.js"></script>
+</head>
+<body>
+<!-- Le conteneur principal de la page -->
+<div data-layout-fragment="content">
+
+    <!-- Titre de la section Problème -->
+    <h4>Problème</h4>
+
+    <!-- Début du formulaire d'ajout ou de modification d'un problème -->
+    <form id="issueForm" th:action="@{/issue-solutions}" method="post" style="width: 80%; margin: auto;">
+        
+        <!-- Inclusion du token CSRF pour protéger contre les attaques CSRF -->
+        <div th:replace="~{layout :: csrf}"></div>
+                    
+        <BR>
+
+        <!-- Champ de recherche pour filtrer les problèmes -->
+        <label>Recherche</label>
+        <input type="text" id="issueSearch" class="form-control" autocomplete="off" placeholder="Recherchez un problème...">
+
+        <!-- Sélecteur de problème dans une liste déroulante -->
+        <label></label>
+        <select id="issueSelect" class="form-control">
+            <!-- Liste dynamique des problèmes à partir de la variable 'issues' -->
+            <option th:each="issue : ${issues}" 
+                    th:value="${issue.issueId}" 
+                    th:text="${issue.name}" 
+                    th:data-issueId="${issue.issueId}"
+                    th:data-name="${issue.name}"
+                    th:data-description="${issue.description}"
+                    th:data-origin="${issue.origin}"
+                    th:data-constraint="${issue.constraint}"></option>
+        </select>
+
+        <!-- Titre pour la section d'ajout ou de modification -->
+        <h3>Ajouter ou modifier un problème</h3>
+
+        <!-- Champ caché pour l'ID du problème (si déjà existant) -->
+        <input id="issueId" name="issueId" type="hidden" th:value="${issue != null ? issue.issueId : ''}">
+        
+        <!-- Champ caché pour l'ID du rendez-vous associé -->
+        <input id="appointmentId" name="appointmentId" type="hidden" th:value="${appointmentId}">
+
+        <!-- Champ pour le nom du problème -->
+        <input id="issueName" name="name" placeholder="Nom du problème" class="form-control" th:value="${issue != null} ? ${issue.name} : ''" style="margin-bottom: 15px;">
+        
+        <!-- Champ pour la description du problème -->
+        <textarea id="issueDescription" name="description" placeholder="Description" class="form-control" th:text="${issue != null} ? ${issue.description} : ''" style="margin-bottom: 15px;"></textarea>
+        
+        <!-- Champ pour l'origine du problème -->
+        <input id="issueOrigin" name="origin" placeholder="Origine" class="form-control" th:value="${issue != null} ? ${issue.origin} : ''" style="margin-bottom: 15px;">
+        
+        <!-- Champ pour les contraintes du problème -->
+        <textarea id="issueConstraint" name="constraint" placeholder="Contraintes" class="form-control" th:text="${issue != null} ? ${issue.constraint} : ''" style="margin-bottom: 15px;"></textarea>
+
+        <!-- Titre pour la section des solutions associées -->
+        <h3>Solutions associées</h3>
+
+        <!-- Table des solutions possibles -->
+        <table id="solutionsTable" class="table table-striped" style="width: 125%;">
+            <thead>
+                <tr>
+                    <!-- En-têtes des colonnes de la table -->
+                    <th>Sélectionner</th>
+                    <th>Solution</th>
+                    <th>Bénéfices</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Boucle pour afficher les solutions liées à ce problème -->
+                <tr th:each="issueSolution : ${issueSolutions}">
+                    <!-- Case à cocher pour sélectionner une solution -->
+                    <td><input type="checkbox" th:value="${issueSolution.solution.solutionId}" name="solutions"></td>
+                    <!-- Affichage de la solution -->
+                    <td th:text="${issueSolution.solution.remedy}"></td>
+                    <!-- Affichage des bénéfices de la solution -->
+                    <td th:text="${issueSolution.solution.benefits}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Zone des boutons de soumission et d'ajout de solution -->
+        <div class="form-actions mt-3" style="display: flex; justify-content: flex-end;">
+            
+            <!-- Bouton pour ajouter une nouvelle solution (aligné à gauche) -->
+            <div style="flex: 1; display: flex; justify-content: flex-start;">
+                <button type="button" onclick="addNewSolution()" class="btn btn-primary"
+                        style="padding: 10px 20px; border-radius: 5px;">
+                    Ajouter une solution
+                </button>
+            </div>
+
+            <!-- Bouton pour soumettre le formulaire (aligné à droite) -->
+            <div style="flex: 1; display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn btn-success"
+                        style="padding: 10px 20px; border-radius: 5px;">
+                    Enregistrer
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+</body>
+
+</html>
+
+
+

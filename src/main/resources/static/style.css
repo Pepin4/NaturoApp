@@ -1,0 +1,413 @@
+/* =======================
+   RESET DE BASE
+======================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+/* =======================
+   MENU BOUTON
+======================= */
+.menu-btn {
+    position: absolute;
+    z-index: 2;
+    right: 20px;
+    top: 20px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    background: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+#open-menu:checked ~ .menu-btn {
+    color: #fff;
+}
+
+#open-menu:checked ~ .menu-btn i:before {
+    content: "\f00d";
+}
+
+/* =======================
+   MENU ANIMÉ (WRAPPER)
+======================= */
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    clip-path: circle(25px at calc(100% - 45px) 45px);
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}
+
+#open-menu:checked ~ .wrapper {
+    clip-path: circle(75%);
+}
+
+/* =======================
+   MENU PRINCIPAL
+======================= */
+.wrapper ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+}
+
+.wrapper ul li {
+    margin: 15px 0;
+    position: relative;
+}
+
+.wrapper ul li a {
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 500;
+    padding: 5px 30px;
+    color: #fff;
+    border-radius: 50px;
+    background: #000;
+    line-height: 50px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.wrapper ul li a:after {
+    content: "";
+    position: absolute;
+    width: 104%;
+    height: 110%;
+    left: -2%;
+    top: -5%;
+    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+    border-radius: 50px;
+    transform: scaleY(0);
+    z-index: -1;
+    animation: rotate 1.5s linear infinite;
+    transition: transform 0.3s ease;
+}
+
+.wrapper ul li a:hover:after {
+    transform: scaleY(1);
+}
+
+.wrapper ul li a:hover {
+    color: #fff;
+}
+
+/* Sous-menu */
+.wrapper ul li ul {
+    position: absolute;
+    top: 125%;
+    left: 0;
+    display: none;
+    background: #000;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.wrapper ul li:hover ul {
+    display: block;
+}
+
+/* Animation */
+@keyframes rotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* =======================
+   SECTION GESTION (Menu vertical)
+======================= */
+.gestion-menu {
+    position: fixed;
+    top: 50%;
+    left: 100px;
+    z-index: 2;
+}
+
+.gestion-menu ul {
+    list-style: none;
+    text-align: left;
+}
+
+.gestion-menu li {
+    margin: 10px 0;
+    font-size: 25px;
+    color: grey;
+}
+
+.gestion-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.gestion-menu a:hover {
+    background-color: #333;
+}
+
+/* =======================
+   SECTION CONTENU CENTRAL
+======================= */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    text-align: center;
+    width: 100%;
+    color: #202020;
+}
+
+.content .title {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.content p {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+/* =======================
+   TABLE DES APPOINTMENTS
+======================= */
+#appointmentsTable th {
+    text-align: center;
+}
+
+/* =======================
+   AVANT LA TABLE (FILTRES, ACTIONS)
+======================= */
+#aboveTable {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#aboveTable p {
+    width: 48%;
+    margin: 0;
+}
+
+#new-btn {
+    float: left;
+    padding-top: 1px;
+    padding-left: 10px;
+}
+
+/* Pour couper le texte long */
+.wrap-text {
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+/* Bouton d’ajout personnalisé */
+.btn-add-ais {
+    border: none !important;
+    background: none !important;
+}
+
+/* Colonnes masquées */
+.hidden-column {
+    display: none;
+}
+
+/* Checkboxes visibles */
+input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 5px;
+    text-align: right;
+}
+
+/* =======================
+   DATATABLE SOLUTIONS
+======================= */
+#solutionsTable {
+    font-size: 12px;
+}
+
+#solutionsTable th,
+#solutionsTable td {
+    padding: 5px;
+}
+
+#solutionsTable th {
+    text-align: center;
+}
+
+.datatable-container {
+    width: 80%;
+    margin: auto;
+}
+
+.dataTables_wrapper {
+    width: 80% !important;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate {
+    font-size: 12px;
+}
+
+.dataTables_paginate {
+    margin-top: 10px;
+}
+
+/* =======================
+   STYLES BOUTONS (Valider / Redirection / Fermeture)
+======================= */
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* =======================
+   STYLES DU FORMULAIRE - AJOUTER UNE SOLUTION
+======================= */
+
+.form-group {
+    display: flex;
+    align-items: center; /* Centre verticalement les éléments */
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    width: 200px; /* Ajuste cette valeur selon tes besoins */
+    margin-right: 10px;
+    text-align: left; /* Aligne le texte à gauche */
+}
+
+.form-group input {
+    flex: 1; /* Le champ de saisie prend le reste de l'espace disponible */
+}
+
+/* Style pour les champs invalides */
+.invalid {
+    border-color: red;
+}
+
+/* Style pour les messages d'erreur */
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Style pour le bouton de soumission */
+button[type="submit"].btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button[type="submit"].btn-danger:hover {
+    background-color: #bb2d3b;
+}
+
+button.success-btn[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Styles supplémentaires pour les champs de formulaire */
+input.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+select.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input.form-control:focus,
+select.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* =======================
+   ASTERISQUE
+======================= */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.required-asterisk {
+    color: red;
+    margin-right: 5px;
+    margin-left: -10px;
+}

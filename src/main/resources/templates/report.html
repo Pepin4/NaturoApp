@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<!-- 
+		 _____                       _   
+		|  __ \                     | |  
+		| |__) |___ _ __   ___  _ __| |_ 
+		|  _  // _ \ '_ \ / _ \| '__| __|
+		| | \ \  __/ |_) | (_) | |  | |_ 
+		|_|  \_\___| .__/ \___/|_|   \__|
+		           | |                   
+		           |_|                   
+	                           
+	-->
+    <meta charset="UTF-8">
+    <title>Rapport du Rendez-vous</title>
+	<style>
+	        body {
+	            font-family: 'Arial', sans-serif;
+	            margin: 0;
+	            padding: 20px;
+	            background-color: #f4f4f9;
+	            color: #333;
+	        }
+
+	        h1, h2, h3 {
+	            color: #2C3E50;
+	            font-family: 'Arial', sans-serif;
+	            margin-bottom: 10px;
+	        }
+
+	        h1 {
+	            text-align: center;
+	            font-size: 36px;
+	            margin-bottom: 40px;
+	        }
+
+	        .section {
+	            margin-bottom: 30px;
+	            padding: 20px;
+	            background-color: #fff;
+	            border-radius: 8px;
+	            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	        }
+
+	        .section h2 {
+	            background-color: #3498db;
+	            color: #fff;
+	            padding: 10px;
+	            border-radius: 5px;
+	        }
+
+	        .section p {
+	            font-size: 16px;
+	            margin: 10px 0;
+	            line-height: 1.6;
+	        }
+
+	        .section p strong {
+	            color: #2C3E50;
+	        }
+
+	        .section .info-table {
+	            width: 100%;
+	            border-collapse: collapse;
+	            margin-top: 20px;
+	        }
+
+	        .section .info-table th, .section .info-table td {
+	            padding: 10px;
+	            border: 1px solid #ddd;
+	            text-align: left;
+	        }
+
+	        .section .info-table th {
+	            background-color: #f0f0f0;
+	            font-weight: bold;
+	        }
+
+	        .section .info-table tr:nth-child(even) {
+	            background-color: #f9f9f9;
+	        }
+
+	        .notes {
+	            font-style: italic;
+	            color: #888;
+	            margin-top: 20px;
+	        }
+
+	        button {
+	            display: block;
+	            width: 200px;
+	            margin: 40px auto 0;
+	            padding: 10px;
+	            background-color: #3498db;
+	            color: white;
+	            border: none;
+	            border-radius: 5px;
+	            cursor: pointer;
+	            font-size: 16px;
+	        }
+
+	        button:hover {
+	            background-color: #2980b9;
+	        }
+			
+			.tabbed {
+			    margin-left: 6.5em;
+			}
+			
+			@media print {
+			    .no-print {
+			        display: none !important;
+			    }
+			}
+
+	    </style>
+		
+		<script>
+			function printReport() {
+			    // Récupère toutes les sections
+			    const sections = [
+			        'appointmentSection',
+			        'patientSection',
+			        'medicalSection',
+			        'lifestyleSection',
+			        'issuesSection',
+			        'notesSection'
+			    ];
+	
+			    // Parcours toutes les sections
+			    sections.forEach(sectionId => {
+			        const section = document.getElementById(sectionId);
+			        const checkbox = document.getElementById(sectionId.replace('Section', 'Checkbox'));
+	
+			        // Si la case est décochée, cache la section
+			        if (!checkbox.checked) {
+			            section.style.display = 'none';
+			        } else {
+			            section.style.display = 'block';
+			        }
+			    });
+	
+			    // Imprime la page
+			    window.print();
+	
+			    // Restaure l'affichage des sections après l'impression
+			    setTimeout(() => {
+			        sections.forEach(sectionId => {
+			            const section = document.getElementById(sectionId);
+			            section.style.display = 'block';
+			        });
+			    }, 500);
+			}
+		</script>
+</head>
+<body>
+    <h1>Rapport du Rendez-vous</h1>
+	
+	<p style="text-align: center;"><strong>Patient :</strong> 
+		<span th:text="${patient.firstName} + ' ' + ${patient.lastName} + ' - Né(e) le ' + ${#dates.format(patient.dateOfBirth, 'dd/MM/yyyy')}"></span>
+	</p>
+
+
+    <!-- Case à cocher pour sélectionner les sections à imprimer -->
+    <div  class="section no-print">
+        <h2>Sections à imprimer</h2>
+        <label><input type="checkbox" id="appointmentCheckbox" checked> Informations sur le Rendez-vous</label><br>
+        <label><input type="checkbox" id="patientCheckbox" checked> Informations sur le Patient</label><br>
+        <label><input type="checkbox" id="medicalCheckbox" checked> Historique médical</label><br>
+        <label><input type="checkbox" id="lifestyleCheckbox" checked> Habitudes de vie</label><br>
+        <label><input type="checkbox" id="issuesCheckbox" checked> Problèmes identifiés et Solutions proposées</label><br>
+        <label><input type="checkbox" id="notesCheckbox" checked> Notes du Praticien</label><br>
+    </div>
+
+    <!-- Sections de rapport -->
+    <div class="section" id="appointmentSection">
+        <h2>Informations sur le Rendez-vous</h2>
+        <p><strong>Date et Heure :</strong> <span th:text="${appointment.dateTime}"></span></p>
+        <p><strong>Sujet :</strong> <span th:text="${appointment.subject}"></span></p>
+    </div>
+
+    <div class="section" id="patientSection">
+        <h2>Informations sur le Patient</h2>
+        <p><strong>Nom :</strong> <span th:text="${patient.firstName} + ' ' + ${patient.lastName}"></span></p>
+        <p><strong>Date de naissance :</strong> <span th:text="${patient.dateOfBirth}"></span></p>
+        <p><strong>Sexe :</strong> <span th:text="${patient.gender}"></span></p>
+        <p><strong>Situation familiale :</strong> <span th:text="${patient.familySituation}"></span></p>
+        <p><strong>Situation professionnelle :</strong> <span th:text="${patient.professionalSituation}"></span></p>
+        <p><strong>Adresse :</strong> 
+            <span th:text="${patient.address.number} + ' ' + ${patient.address.street} + ', ' + ${patient.address.city.cityCode} + ' ' + ${patient.address.city.cityName}"></span>
+        </p>
+        <p><strong>Pays :</strong> <span th:text="${patient.address.city.country.countryName}"></span></p>
+        <p><strong>Email :</strong> <span th:text="${patient.contact.email}"></span></p>
+        <p><strong>Téléphone :</strong> <span th:text="${patient.contact.phoneNumber}"></span></p>
+    </div>
+
+    <div class="section" id="medicalSection">
+        <h2>Historique médical</h2>
+        <div th:each="medical : ${medicalInfos}">
+            <h3><span th:text="${medical.type}"></span> - <span th:text="${#dates.format(medical.dateAdded, 'dd/MM/yyyy')}"></span></h3>
+            <p><strong>Description :</strong> <span th:text="${medical.description}"></span></p>
+            <p><strong>Traitement :</strong> <span th:text="${medical.treatment}"></span></p>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="section" id="lifestyleSection">
+        <h2>Habitudes de vie</h2>
+        <p><strong>Excès :</strong> <span th:text="${appointment.theExcesses}"></span></p>
+        <p><strong>Habitudes alimentaires :</strong> <span th:text="${appointment.eatingHabits}"></span></p>
+        <p><strong>Qualité du sommeil :</strong> <span th:text="${appointment.sleepQuality}"></span></p>
+        <p><strong>Activité physique :</strong> <span th:text="${appointment.physicalActivity}"></span></p>
+        <p><strong>Circulation sanguine :</strong> <span th:text="${appointment.bloodCirculation}"></span></p>
+        <p><strong>Capacité respiratoire :</strong> <span th:text="${appointment.respiratoryCapacity}"></span></p>
+        <p><strong>Transit intestinal :</strong> <span th:text="${appointment.transit}"></span></p>
+        <p><strong>Réaction au stress :</strong> <span th:text="${appointment.stressReaction}"></span></p>
+    </div>
+
+    <div class="section" id="issuesSection">
+        <h2>Problèmes identifiés et Solutions proposées</h2>
+        <div th:each="ais : ${appointmentIssuesSolutions}">
+            <h3>Problème : <span th:text="${ais.issueSolution.issue.name}"></span></h3>
+            <p><strong>Origine :</strong> <span th:text="${ais.issueSolution.issue.origin}"></span></p>
+            <p><strong>Contraintes :</strong> <span th:text="${ais.issueSolution.issue.constraint}"></span></p>
+            <p><strong>Description :</strong> <span th:text="${ais.issueSolution.issue.description}"></span></p>
+
+            <p><strong>Solution proposée :</strong> <span th:text="${ais.issueSolution.solution.remedy}"></span></p>
+            <p><strong>Bénéfices attendus :</strong> <span th:text="${ais.issueSolution.solution.benefits}"></span></p>
+            <div>
+                <p><strong>Fournisseur :</strong> 
+                    <span th:text="${ais.issueSolution.solution.supplier.supplierName}"></span>
+                </p>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="section" id="notesSection">
+        <h2>Notes du Praticien</h2>
+        <p th:text="${appointment.note}"></p>
+    </div>
+
+    <!-- Bouton pour imprimer le rapport -->
+    <button onclick="printReport()">Imprimer le rapport</button>
+</body>
+</html>
+

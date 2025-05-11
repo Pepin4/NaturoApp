@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:hx="http://www.w3.org/1999/xhtml" lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:cms="http://www.ytx.com/cms"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      data-layout-decorate="layout">
+<head>
+	  <!-- 
+		__      __   _ _     _ 
+		\ \    / /  | (_)   | |
+		 \ \  / /_ _| |_  __| |
+		  \ \/ / _` | | |/ _` |
+		   \  / (_| | | | (_| |
+		    \/ \__,_|_|_|\__,_|
+		                       	                           
+	  -->
+    <meta charset="UTF-8">
+    <title>Valider</title>
+
+</head>
+<body>
+    <div data-layout-fragment="content">
+        <!-- Message de confirmation de la demande -->
+        <div><h4>Votre demande a bien été enregistrée</h4></div>
+
+        <div class="button-container">
+            <!-- Bouton pour rediriger vers l'agenda -->
+            <button class="btn btn-primary" type="button" onclick="window.location.href='/appointments';">
+                Aller à l'agenda
+            </button>
+
+            <!-- Bouton pour fermer la fenêtre -->
+            <button class="btn btn-success" type="button" onclick="window.close();">
+                Fermer cette fenêtre
+            </button>
+        </div>
+    </div>
+</body>
+</html>

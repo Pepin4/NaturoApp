@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:hx="http://www.w3.org/1999/xhtml" lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:cms="http://www.ytx.com/cms"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      data-layout-decorate="layout">
+<head>
+	  <!-- 
+		 ______    _ _ _                 _   _            _   
+		|  ____|  | (_) |               | | (_)          | |  
+		| |__   __| |_| |_   _ __   __ _| |_ _  ___ _ __ | |_ 
+		|  __| / _` | | __| | '_ \ / _` | __| |/ _ \ '_ \| __|
+		| |___| (_| | | |_  | |_) | (_| | |_| |  __/ | | | |_ 
+		|______\__,_|_|\__| | .__/ \__,_|\__|_|\___|_| |_|\__|
+		                    | |                               
+		                    |_|                               
+		                           
+	  -->
+    <meta charset="UTF-8">
+    <title>Editer patient</title>
+</head>
+<body>
+    <div data-layout-fragment="content">
+
+        <!-- Titre de la page "Editer patient" -->
+        <div><h4>Editer patient</h4></div>
+
+        <!-- Conteneur du formulaire centré avec un peu de padding sur la gauche -->
+        <div style="display: flex; justify-content: center; padding-left: 50px;">
+            
+            <!-- Formulaire de mise à jour du patient, lié à l'objet "patient" -->
+            <form id="updatePatientForm" th:object="${patient}" method="post" th:action="@{'/patients/edit/' + ${patient.patientId}}"
+                  style="display: flex; flex-direction: column; gap: 15px; width: 80%; max-width: 900px;">
+
+                <!-- Inclusion du token CSRF pour la sécurité -->
+                <div th:replace="~{layout :: csrf}"></div>
+                
+                <!-- Section Prénom -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Prénom <span style="color: red;">*</span></label>
+                    <input type="text" name="firstName" th:field="*{firstName}" id="firstName" class="form-control" style="width: 50%;">
+                    <span class="error" id="firstNameError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Nom -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Nom <span style="color: red;">*</span></label>
+                    <input type="text" name="lastName" th:field="*{lastName}" id="lastName" class="form-control" style="width: 50%;">
+                    <span class="error" id="lastNameError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Date de Naissance -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label for="dateOfBirth" class="required" style="width: 200px;">Date de Naissance <span style="color: red;">*</span></label>
+                    <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control" style="width: 50%;">
+                    <span class="error" id="dateOfBirthError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Sexe -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Sexe <span style="color: red;">*</span></label>
+                    <select name="gender" th:field="*{gender}" id="gender" class="form-control" style="width: 50%;">
+                        <option value="">Sélectionner...</option>
+                        <option value="M">Homme</option>
+                        <option value="F">Femme</option>
+                        <option value="A">Autre</option>
+                    </select>
+                    <span class="error" id="genderError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Situation Familiale -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label style="width: 200px;">Situation Familiale</label>
+                    <input type="text" name="familySituation" th:field="*{familySituation}" id="familySituation" class="form-control" style="width: 50%;">
+                    <span class="error" id="familySituationError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Situation Professionnelle -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label style="width: 200px;">Situation Professionnelle</label>
+                    <input type="text" name="professionalSituation" th:field="*{professionalSituation}" id="professionalSituation" class="form-control" style="width: 50%;">
+                    <span class="error" id="professionalSituationError" style="color: red;"></span>
+                </div>
+
+                <!-- Erreur de contact (disparait si aucune erreur) -->
+                <span class="error" id="contactError" style="color: red; display: none;"></span>
+
+                <!-- Section Numéro de téléphone -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label for="phoneNumber" style="width: 200px;">Numéro de téléphone</label>
+                    <input type="text" name="phoneNumber" th:field="*{contact.phoneNumber}" id="phoneNumber" class="form-control" style="width: 50%;">
+                </div>
+
+                <!-- Section E-mail -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label for="email" style="width: 200px;">E-mail</label>
+                    <input type="email" name="email" th:field="*{contact.email}" id="email" class="form-control" style="width: 50%;">
+                </div>
+
+                <!-- Section Adresse - Numéro -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Numéro <span style="color: red;">*</span></label>
+                    <input type="text" name="number" th:field="*{address.number}" id="number" class="form-control" style="width: 50%;">
+                    <span class="error" id="numberError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Adresse - Rue -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Rue <span style="color: red;">*</span></label>
+                    <input type="text" name="street" th:field="*{address.street}" id="street" class="form-control" style="width: 50%;">
+                    <span class="error" id="streetError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Adresse - Code Postal -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Code Postal <span style="color: red;">*</span></label>
+                    <input type="text" name="cityCode" th:field="*{address.city.cityCode}" id="cityCode" class="form-control" style="width: 50%;">
+                    <span class="error" id="cityCodeError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Adresse - Ville -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Ville <span style="color: red;">*</span></label>
+                    <input type="text" name="cityName" th:field="*{address.city.cityName}" id="cityName" class="form-control" style="width: 50%;">
+                    <span class="error" id="cityNameError" style="color: red;"></span>
+                </div>
+
+                <!-- Section Adresse - Pays -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label class="required" style="width: 200px;">Pays <span style="color: red;">*</span></label>
+                    <select name="countryName" th:field="*{address.city.country.countryName}" id="countryName" class="form-control" style="width: 50%;">
+                        <option th:each="country : ${countries}"
+                                th:value="${country.countryName}"
+                                th:text="${country.countryName}"
+                                th:selected="${country.countryName == patient.address.city.country.countryName}">
+                        </option>
+                    </select>
+                    <span class="error" id="countryError" style="color: red;"></span>
+                </div>
+
+                <!-- Champ caché pour le code ISO du pays -->
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="hidden" name="countryCodeIso" th:field="*{address.city.country.isoCode}" id="countryCodeIso" class="form-control" style="width: 50%;">
+                </div>
+
+                <!-- Boutons pour mettre à jour ou supprimer le patient -->
+                <div class="form-actions mt-3" style="display: flex; justify-content: flex-end; gap: 15px; max-width: 73%; margin-right: 20px;">
+                    <div style="flex: 1; display: flex; justify-content: flex-start;">
+                        <!-- Bouton pour supprimer un patient avec confirmation -->
+                        <button type="submit" name="action" value="delete" class="btn btn-danger"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce patient ? Supprimer un patient entraîne également la suppression de tous ses rendez-vous. Cette action est irréversible.');"
+                            style="padding: 10px 20px; border-radius: 5px; margin-left: 20px;">
+                            Supprimer le patient
+                        </button>
+                    </div>
+
+                    <div style="flex: 1; display: flex; justify-content: flex-end;">
+                        <!-- Bouton pour mettre à jour le patient -->
+                        <button type="submit" name="action" value="update" class="btn btn-success"
+                                style="padding: 10px 20px; border-radius: 5px;">
+                            Mettre à jour
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Script JavaScript pour la page -->
+    <script src="/js/edit-patient.js"></script>
+
+</body>
+
+</html>

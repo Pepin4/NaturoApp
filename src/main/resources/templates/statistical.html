@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:hx="http://www.w3.org/1999/xhtml" lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:cms="http://www.ytx.com/cms"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      data-layout-decorate="layout">
+<head>
+	  <!-- 
+		  _____ _        _   _     _   _                       
+		 / ____| |      | | (_)   | | (_)                      
+		| (___ | |_ __ _| |_ _ ___| |_ _  __ _ _   _  ___  ___ 
+		 \___ \| __/ _` | __| / __| __| |/ _` | | | |/ _ \/ __|
+		 ____) | || (_| | |_| \__ \ |_| | (_| | |_| |  __/\__ \
+		|_____/ \__\__,_|\__|_|___/\__|_|\__, |\__,_|\___||___/
+		                                    | |                
+		                                    |_|                
+                      
+	  -->
+	<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Statistiques des patients par problème</title>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="/js/issue-stats.js"></script>
+	</head>
+	<body>
+		<div data-layout-fragment="content">
+		        <h1>Statistiques des problèmes rencontrés par les patients</h1>
+
+		        <canvas id="issueChart" width="400" height="200"></canvas>
+		    </div>
+		</body>
+		</html>
