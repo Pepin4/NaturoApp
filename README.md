@@ -20,7 +20,7 @@ Git installé
 
 2️⃣ Clone du projet
 bash
-git clone https://github.com/Pepin4/NaturoApp-TFE.git
+git clone https://github.com/Pepin4/NaturoApp.git
 cd NaturoApp-TFE
 3️⃣ Configuration et lancement
 Configure application.properties (base de données).
