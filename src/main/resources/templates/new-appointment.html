@@ -52,32 +52,34 @@
                 <!-- Section du sujet du rendez-vous -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="subject" class="required" style="width: 200px;">Sujet <span style="color: red;">*</span></label>
-                    <input type="text" name="subject" class="form-control" style="width: 50%;" th:field="*{appointment.subject}">
+                    <input type="text" maxlength="1024" title="Le sujet doit contenir maximum 1024 caractères." name="subject" class="form-control" style="width: 50%;" th:field="*{appointment.subject}">
                     <!-- Affichage des erreurs liées à ce champ -->
                     <span class="error" id="subjectError" style="color: red;"></span>
                 </div>
+				
+				<!-- Titre pour la section suivante, relative à l'ajout ou l'association d'un Patient -->
+				<h4>Ajouter ou associer un patient</h4>
 
-                <!-- Recherche et sélection d'un patient -->
-                <h3>Rechercher le Patient</h3>
+				<!-- Champ de recherche de Patient avec auto-complétion -->
+				<label>Recherche patient</label>
                 
                 <!-- Champ de recherche pour trouver un patient -->
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <label for="patientSearch" style="width: 200px;">Recherche Patient</label>
-                    <input type="text" id="patientSearch" class="form-control" style="width: 50%;" autocomplete="off" placeholder="Recherchez un patient...">
+                <div class="form-group" style="display: flex; align-items: center; margin: 0;">
+                    <input type="text" id="patientSearch" class="form-control" autocomplete="off" placeholder="Recherchez un patient...">
                 </div>
+				
+				<!-- Affichage des erreurs liées à la sélection du patient -->
+				<span class="error" id="patientError" style="color: red; margin: 0; display: block;" aria-live="polite"></span>
 
                 <!-- Liste déroulante pour sélectionner un patient parmi les suggestions -->
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <label for="patientSelect" style="width: 200px;">Sélectionnez un patient</label>
-                    <select id="patientSelect" class="form-control" style="width: 50%;" size="1">
+                <div class="form-group" style="display: flex; align-items: center; margin: 0;">
+                    <select id="patientSelect" class="form-control" size="1">
                         <!-- Les options de patients seront ajoutées dynamiquement -->
                     </select>
                 </div>
 
                 <!-- Affichage des erreurs liées à la sélection du patient -->
                 <span class="error" id="patientError" style="color: red;"></span>
-                
-                <h3>Informations sur le Patient</h3>
 
                 <!-- Champ caché pour le patientId (identifiant du patient) -->
                 <input type="hidden" id="patientId" name="patientId">
@@ -86,21 +88,21 @@
                 <!-- Prénom -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="firstName" class="required" style="width: 200px;">Prénom <span style="color: red;">*</span></label>
-                    <input type="text" name="firstName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="Le prénom doit contenir maximum 64 caractères." name="firstName" class="form-control" style="width: 50%;">
                     <span class="error" id="firstNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Nom -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="lastName" class="required" style="width: 200px;">Nom <span style="color: red;">*</span></label>
-                    <input type="text" name="lastName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="Le nom doit contenir maximum 64 caractères." name="lastName" class="form-control" style="width: 50%;">
                     <span class="error" id="lastNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Date de naissance -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="dateOfBirth" class="required" style="width: 200px;">Date de Naissance <span style="color: red;">*</span></label>
-                    <input type="date" name="dateOfBirth" class="form-control" style="width: 50%;">
+                    <input type="date" title="Veuillez sélectionner une date." name="dateOfBirth" class="form-control" style="width: 50%;">
                     <span class="error" id="dateOfBirthError" style="color: red;"></span>
                 </div>
 
@@ -119,14 +121,14 @@
                 <!-- Situation familiale -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="familySituation" style="width: 200px;">Situation Familiale</label>
-                    <input type="text" name="familySituation" class="form-control" style="width: 50%;">
+                    <input type="text"  maxlength="256" title="La situation familiale doit contenir maximum 256 caractères." name="familySituation" class="form-control" style="width: 50%;">
                     <span class="error" id="familySituationError" style="color: red;"></span>
                 </div>
 
                 <!-- Situation professionnelle -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="professionalSituation" style="width: 200px;">Situation Professionnelle</label>
-                    <input type="text" name="professionalSituation" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="128" title="La situation professionnelle doit contenir maximum 128 caractères." name="professionalSituation" class="form-control" style="width: 50%;">
                     <span class="error" id="professionalSituationError" style="color: red;"></span>
                 </div>
 
@@ -137,48 +139,48 @@
                 <!-- Numéro de téléphone -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="phoneNumber" style="width: 200px;">Numéro de téléphone</label>
-                    <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" style="width: 50%;">
+                    <input type="tel" pattern="^0[1-9][0-9]{8}$" title="Le numéro ne doit contenir ni lettres ni caractères spéciaux." name="phoneNumber" id="phoneNumber" class="form-control" style="width: 50%;">
                 </div>
 
                 <!-- E-mail -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="email" style="width: 200px;">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control" style="width: 50%;">
+                    <input type="email"  title="Veuillez entrer une adresse email valide." name="email" id="email" class="form-control" style="width: 50%;">
                 </div>
                 
                 <!-- Informations d'adresse -->
                 <!-- Numéro -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="number" class="required" style="width: 200px;">Numéro <span style="color: red;">*</span></label>
-                    <input type="text" name="number" id="number" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="5" title="Le numéro doit contenir maximum 5 caractères." name="number" id="number" class="form-control" style="width: 50%;">
                     <span class="error" id="numberError" style="color: red;"></span>
                 </div>
                 
                 <!-- Rue -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="street" class="required" style="width: 200px;">Rue <span style="color: red;">*</span></label>
-                    <input type="text" name="street" id="street" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="128" title="La rue doit contenir maximum 128 caractères." name="street" id="street" class="form-control" style="width: 50%;">
                     <span class="error" id="streetError" style="color: red;"></span>
                 </div>
 
                 <!-- Code postal -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="cityCode" class="required" style="width: 200px;">Code Postal <span style="color: red;">*</span></label>
-                    <input type="text" name="cityCode" id="cityCode" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="10" title="Le code postal doit contenir maximum 10 caractères." name="cityCode" id="cityCode" class="form-control" style="width: 50%;">
                     <span class="error" id="cityCodeError" style="color: red;"></span>
                 </div>
                 
                 <!-- Ville -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="cityName" class="required" style="width: 200px;">Ville <span style="color: red;">*</span></label>
-                    <input type="text" name="cityName" id="cityName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="La ville doit contenir maximum 64 caractères." name="cityName" id="cityName" class="form-control" style="width: 50%;">
                     <span class="error" id="cityNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Pays -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="country" class="required" style="width: 200px;">Pays <span style="color: red;">*</span></label>
-                    <select name="country" class="form-control" style="width: 50%;" id="countrySelect">
+                    <select name="country" title="Veuillez sélectionner un pays." class="form-control" style="width: 50%;" id="countrySelect">
                         <option value="">Sélectionner...</option>
                         <th:block th:each="country : ${countries}">
                             <option th:value="${country.countryId}" th:text="${country.countryName}"

@@ -107,79 +107,92 @@ public class IssueSolutionController {
 
     @PostMapping
     public String saveIssueSolutions(
-        @RequestParam("issueId") int issueId,
+    	@RequestParam(value = "issueId", defaultValue = "0") int issueId,
         @RequestParam("name") String issueName,
         @RequestParam("description") String issueDescription,
         @RequestParam("origin") String issueOrigin,
         @RequestParam("constraint") String issueConstraint,
         @RequestParam(value = "solutions", required = false) List<String> selectedSolutions,
-        @RequestParam(value = "appointmentId", required = false) int appointmentId,
+        @RequestParam(value = "appointmentId", required = false, defaultValue = "0") int appointmentId,
         Model model
     ) {
-
-        // Vérifie si le problème existe déjà
-        Issue issue = null;
-        if (issueId != 0) {
+        try {
+            Issue issue;    
             Optional<Issue> issueOptional = issueRepository.findById(issueId);
-            if (issueOptional.isPresent()) {
-                issue = issueOptional.get();
+
+            if (issueId == 0 || issueOptional.isEmpty()) {
+                issue = new Issue();
             } else {
-                model.addAttribute("error", "Problème introuvable avec l'id " + issueId);
-                return "error";
-            }
-        }
-
-        if (issue == null) {
-            issue = new Issue();
-        }
-
-        issue.setName(issueName);
-        issue.setDescription(issueDescription);
-        issue.setOrigin(issueOrigin);
-        issue.setConstraint(issueConstraint);
-        issueRepository.save(issue);
-
-        // Si un appointmentId est fourni, récupérer le rendez-vous dans la DB
-        if (appointmentId != 0) {
-            Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
-            if (appointmentOptional.isEmpty()) {
-                model.addAttribute("error", "Rendez-vous introuvable avec l'id " + appointmentId);
-                return "error";
+                issue = issueOptional.get();
             }
 
-            Appointment appointment = appointmentOptional.get();
+            // Mise à jour des champs
+            issue.setName(issueName);
+            issue.setDescription(issueDescription);
+            issue.setOrigin(issueOrigin);
+            issue.setConstraint(issueConstraint);
 
-            // Gestion des solutions sélectionnées
-            if (selectedSolutions != null && !selectedSolutions.isEmpty()) {
-                List<IssueSolution> issueSolutions = new ArrayList<>();
+            // Sauvegarde ou mise à jour du problème
+            issue = issueRepository.save(issue);
 
-                // Convertir les solutions sélectionnées de String à int et récupérer les associations IssueSolution
-                for (String solutionIdStr : selectedSolutions) {
-                    int solutionId = Integer.parseInt(solutionIdStr);
+            // Si un appointmentId est fourni, récupérer le rendez-vous dans la DB
+            if (appointmentId != 0) {
+                Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
+                if (appointmentOptional.isEmpty()) {
+                    model.addAttribute("error", "Rendez-vous introuvable avec l'id " + appointmentId);
+                    return "error";
+                }
 
-                    List<IssueSolution> found = issueSolutionRepository.findByIssueAndSolution(issue.getIssueId(), solutionId);
+                Appointment appointment = appointmentOptional.get();
 
-                    if (found.isEmpty()) {
-                        model.addAttribute("error", "Aucune association entre ce problème et la solution " + solutionId);
-                        return "error";
+                // Gestion des solutions sélectionnées
+                if (selectedSolutions != null && !selectedSolutions.isEmpty()) {
+                    List<IssueSolution> issueSolutions = new ArrayList<>();
+
+                    // Convertir les solutions sélectionnées de String à int et récupérer les associations IssueSolution
+                    for (String solutionIdStr : selectedSolutions) {
+                        int solutionId = Integer.parseInt(solutionIdStr);
+
+                        List<IssueSolution> found = issueSolutionRepository.findByIssueAndSolution(issue.getIssueId(), solutionId);
+
+                        if (found.isEmpty()) {
+                            model.addAttribute("error", "Aucune association entre ce problème et la solution " + solutionId);
+                            return "error";
+                        }
+
+                        issueSolutions.addAll(found);
                     }
 
-                    issueSolutions.addAll(found);
-                }
-
-                // Associer les IssueSolution au rendez-vous via la table AppointmentIssueSolution
-                for (IssueSolution issueSolution : issueSolutions) {
-                    AppointmentIssueSolution appointmentIssueSolution = new AppointmentIssueSolution();
-                    appointmentIssueSolution.setAppointment(appointment);
-                    appointmentIssueSolution.setIssueSolution(issueSolution);
-                    appointmentIssueSolutionRepository.save(appointmentIssueSolution);
+                    // Associer les IssueSolution au rendez-vous via la table AppointmentIssueSolution
+                    for (IssueSolution issueSolution : issueSolutions) {
+                        AppointmentIssueSolution appointmentIssueSolution = new AppointmentIssueSolution();
+                        appointmentIssueSolution.setAppointment(appointment);
+                        appointmentIssueSolution.setIssueSolution(issueSolution);
+                        appointmentIssueSolutionRepository.save(appointmentIssueSolution);
+                    }
                 }
             }
+
+            // Redirige vers la page d'édition du rendez-vous
+            return "redirect:/appointments/edit/" + appointmentId;
+
+        } catch (Exception e) {
+            // Gestion de l'erreur : message et conservation des données
+            model.addAttribute("issueError", "Échec de la sauvegarde : " + e.getMessage());
+
+            // Remettre dans le modèle les données du formulaire pour réaffichage
+            model.addAttribute("issueId", issueId);
+            model.addAttribute("name", issueName);
+            model.addAttribute("description", issueDescription);
+            model.addAttribute("origin", issueOrigin);
+            model.addAttribute("constraint", issueConstraint);
+            model.addAttribute("selectedSolutions", selectedSolutions);
+            model.addAttribute("appointmentId", appointmentId);
+
+            // Retourner la vue du formulaire d'édition (à adapter selon ton nom de vue)
+            return "issue-solutions";  
+            // <-- Remplace "issueForm" par la vue qui affiche le formulaire d'édition du problème
         }
-
-        // Redirige vers la page d'édition du rendez-vous
-        return "redirect:/appointments/edit/" + appointmentId;
-
     }
 
     /**

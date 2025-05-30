@@ -32,8 +32,12 @@
                     
         <BR>
 
+
         <!-- Champ de recherche pour filtrer les problèmes -->
         <label>Recherche</label>
+		
+		<div id="issueError" style="color: red; margin-top: 10px;"></div>
+		
         <input type="text" id="issueSearch" class="form-control" autocomplete="off" placeholder="Recherchez un problème...">
 
         <!-- Sélecteur de problème dans une liste déroulante -->
@@ -60,16 +64,16 @@
         <input id="appointmentId" name="appointmentId" type="hidden" th:value="${appointmentId}">
 
         <!-- Champ pour le nom du problème -->
-        <input id="issueName" name="name" placeholder="Nom du problème" class="form-control" th:value="${issue != null} ? ${issue.name} : ''" style="margin-bottom: 15px;">
+        <input type="text" maxlength="256" title="Le nom du problème doit contenir maximum 256 caractères." id="issueName" name="name" placeholder="Nom du problème" class="form-control" th:value="${issue != null} ? ${issue.name} : ''" style="margin-bottom: 15px;">
         
         <!-- Champ pour la description du problème -->
-        <textarea id="issueDescription" name="description" placeholder="Description" class="form-control" th:text="${issue != null} ? ${issue.description} : ''" style="margin-bottom: 15px;"></textarea>
+        <textarea type="text" maxlength="1024" title="Le description du problème doit contenir maximum 1024 caractères." id="issueDescription" name="description" placeholder="Description" class="form-control" th:text="${issue != null} ? ${issue.description} : ''" style="margin-bottom: 15px;"></textarea>
         
         <!-- Champ pour l'origine du problème -->
-        <input id="issueOrigin" name="origin" placeholder="Origine" class="form-control" th:value="${issue != null} ? ${issue.origin} : ''" style="margin-bottom: 15px;">
+        <input type="text" maxlength="512" title="L'origine du problème doit contenir maximum 512 caractères." id="issueOrigin" name="origin" placeholder="Origine" class="form-control" th:value="${issue != null} ? ${issue.origin} : ''" style="margin-bottom: 15px;">
         
         <!-- Champ pour les contraintes du problème -->
-        <textarea id="issueConstraint" name="constraint" placeholder="Contraintes" class="form-control" th:text="${issue != null} ? ${issue.constraint} : ''" style="margin-bottom: 15px;"></textarea>
+        <textarea type="text" maxlength="1024" title="La contrainte doit contenir maximum 1024 caractères." id="issueConstraint" name="constraint" placeholder="Contraintes" class="form-control" th:text="${issue != null} ? ${issue.constraint} : ''" style="margin-bottom: 15px;"></textarea>
 
         <!-- Titre pour la section des solutions associées -->
         <h3>Solutions associées</h3>

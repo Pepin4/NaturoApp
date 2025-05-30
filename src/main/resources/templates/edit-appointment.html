@@ -60,46 +60,46 @@
                 <!-- Champ pour le sujet du rendez-vous -->
                 <div class="required" style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Sujet <span style="color: red;">*</span></label>
-                    <textarea th:field="*{subject}" style="width: 50%;" id="subject" />
+                    <textarea type="text" maxlength="1024" title="Le sujet doit contenir maximum 1024 caractères." th:field="*{subject}" style="width: 50%;" id="subject" />
                     <span id="subjectError" class="error" style="color: red;"></span>
                 </div>
 
                 <!-- Autres champs relatifs à l'état de santé du patient -->
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Excès</label>
-                    <input type="text" th:field="*{theExcesses}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="Les excès doivent contenir maximum 128 caractères." th:field="*{theExcesses}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Habitudes Alimentaires</label>
-                    <textarea th:field="*{eatingHabits}" style="width: 50%;"></textarea>
+                    <textarea type="text" maxlength="256" title="Les habitudes alimentaires doivent contenir maximum 256 caractères." th:field="*{eatingHabits}" style="width: 50%;"></textarea>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Qualité du Sommeil</label>
-                    <input type="text" th:field="*{sleepQuality}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="La qualité du sommeil doit contenir maximum 128 caractères." th:field="*{sleepQuality}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Activité Physique</label>
-                    <input type="text" th:field="*{physicalActivity}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="L'activité physique doit contenir maximum 128 caractères." th:field="*{physicalActivity}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Circulation Sanguine</label>
-                    <input type="text" th:field="*{bloodCirculation}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="La circulation sanguine doit contenir maximum 128 caractères." th:field="*{bloodCirculation}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Capacité Respiratoire</label>
-                    <input type="text" th:field="*{respiratoryCapacity}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="La capacitées respiratoire doit contenir maximum 128 caractères." th:field="*{respiratoryCapacity}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Transit</label>
-                    <input type="text" th:field="*{transit}" style="width: 50%;" />
+                    <input type="text" maxlength="128" title="Le transite doit contenir maximum 128 caractères." th:field="*{transit}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Réaction au Stress</label>
-                    <input type="text" th:field="*{stressReaction}" style="width: 50%;" />
+                    <input type="text" maxlength="256" title="La réaction au stresse doit contenir maximum 256 caractères." th:field="*{stressReaction}" style="width: 50%;" />
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px; position: relative;">Note</label>
-                    <textarea th:field="*{note}" style="width: 50%; height: 6em;"></textarea>
+                    <textarea type="text" maxlength="1024" title="Les notes doivent contenir maximum 1024 caractères." th:field="*{note}" style="width: 50%; height: 6em;"></textarea>
                 </div>
 
 				<!-- Lien pour ajouter un problème et ses solutions -->

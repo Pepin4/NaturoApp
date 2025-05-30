@@ -79,13 +79,13 @@
                             <!-- Champ pour le nom d'utilisateur -->
                             <div class="mb-3">
                                 <label for="username" class="form-label">Nom d'utilisateur</label>
-                                <input type="text" id="username" name="username" class="form-control" required autofocus>
+                                <input type="text" maxlength="64" title="Le nom d'utilisateur doit contenir maximum 64 caractères." id="username" name="username" class="form-control" required autofocus>
                             </div>
     
                             <!-- Champ pour le mot de passe -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" id="password" name="password" class="form-control" required>
+                                <input type="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,64}" title="Le mot de passe doit contenir entre 8 et 64 caractères, dont au moins une lettre minuscule, une majuscule, un chiffre et un caractère spécial." id="password" name="password" class="form-control" required>
                             </div>
     
                             <!-- Boutons de soumission et création de compte avec un alignement flexible -->

@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const cityCodeField = document.getElementById("cityCode");
     const cityNameField = document.getElementById("cityName");
     const countryField = document.getElementById("country");
+	const supplierErrorSpan = document.getElementById('supplierError');
+	
+	selectList.style.display = "none";
 
     // Variable pour gérer le "debounce" de la recherche (délai entre les entrées utilisateur)
     let debounceTimer;
@@ -32,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         // Si des fournisseurs sont trouvés, affiche la liste
                         if (suppliers.length > 0) {
+							supplierErrorSpan.textContent = '';
                             selectList.style.display = "block";
                             suppliers.forEach(supplier => {
                                 // Crée une option dans la liste pour chaque fournisseur
@@ -53,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             // Si un seul fournisseur est trouvé, remplir directement le formulaire
                             if (suppliers.length === 1) {
+								selectList.style.display = "block";
                                 const supplier = suppliers[0];
                                 nameField.value = supplier.supplierName;
                                 phoneField.value = supplier.contact?.phoneNumber || '';
@@ -62,10 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                 cityCodeField.value = supplier.address?.city?.cityCode;
                                 cityNameField.value = supplier.address?.city?.cityName;
                                 countryField.value = supplier.address?.city?.country?.countryId;
-                                selectList.style.display = "none";
                             }
                         } else {
+							supplierErrorSpan.textContent = 'Aucun patient ne correspond à votre recherche.';
                             selectList.style.display = "none";
+							
                         }
                     })
                     .catch(error => {
@@ -74,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 300); 
         } else {
             selectList.style.display = "none";
+			supplierErrorSpan.textContent = '';
         }
     });
 

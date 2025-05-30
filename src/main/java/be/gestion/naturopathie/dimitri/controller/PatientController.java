@@ -3,8 +3,10 @@ package be.gestion.naturopathie.dimitri.controller;
 import be.gestion.naturopathie.dimitri.model.Address;
 import be.gestion.naturopathie.dimitri.model.City;
 import be.gestion.naturopathie.dimitri.model.Country;
+import be.gestion.naturopathie.dimitri.model.MedicalInfo;
 import be.gestion.naturopathie.dimitri.model.Patient;
 import be.gestion.naturopathie.dimitri.repository.CountryRepository;
+import be.gestion.naturopathie.dimitri.repository.MedicalInfoRepository;
 import be.gestion.naturopathie.dimitri.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,9 @@ public class PatientController {
     
     @Autowired
     private CountryRepository countryRepository;
+    
+    @Autowired
+    private MedicalInfoRepository medicalInfoRepository;
 
     /**
      * Récupère tous les patients enregistrés dans la base de données.
@@ -83,9 +88,12 @@ public class PatientController {
 
         Patient patient = optionalPatient.get();
         List<Country> countries = countryRepository.findAll();
+        List<MedicalInfo> medicalInfos = medicalInfoRepository.findByPatient_PatientId(patient.getPatientId());
+
 
         model.addAttribute("patient", patient);
         model.addAttribute("countries", countries);
+        model.addAttribute("medicalInfos", medicalInfos);
         return "edit-patient";
     }
 
@@ -168,6 +176,16 @@ public class PatientController {
             existingPatient.setFamilySituation(patient.getFamilySituation());
             existingPatient.setProfessionalSituation(patient.getProfessionalSituation());
 
+            patient.getMedicalInfos().size();
+            
+            if (patient.getMedicalInfos() != null) {
+                // Ajoute les nouvelles infos
+                for (MedicalInfo mi : patient.getMedicalInfos()) {
+                    mi.setPatient(existingPatient);
+                    existingPatient.getMedicalInfos().add(mi);
+                }
+            }
+            
             // Sauvegarde finale
             patientRepository.save(existingPatient);
 

@@ -1,12 +1,15 @@
 package be.gestion.naturopathie.dimitri.controller;
 
 import be.gestion.naturopathie.dimitri.model.MedicalInfo;
+import be.gestion.naturopathie.dimitri.model.Patient;
 import be.gestion.naturopathie.dimitri.repository.MedicalInfoRepository;
 import be.gestion.naturopathie.dimitri.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,21 +73,30 @@ public class MedicalInfoController {
 
         MedicalInfo mi = optionalMedicalInfo.get();
         model.addAttribute("medicalInfo", mi);
-        return "medical-info/detail"; // templates/medical-info/detail.html
+        return "medical-info";
     }
 
     /**
      * Affiche le formulaire pour créer une nouvelle information médicale.
      *
+     * @param patientId L'identifiant du patient auquel l'information médicale sera associée. Si 0 ou absent, aucun patient n'est pré-associé.
      * @param model Le modèle Spring utilisé pour passer les données à la vue.
      * @return La vue contenant le formulaire de création.
      */
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
-        model.addAttribute("medicalInfo", new MedicalInfo());
-        model.addAttribute("patients", patientRepository.findAll()); // pour sélectionner un patient
-        return "medical-info/new"; // templates/medical-info/new.html
+    public String showCreateForm(@RequestParam int patientId, Model model) {
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        Patient patient = optionalPatient.get();
+        
+        MedicalInfo medicalInfo = new MedicalInfo();
+        medicalInfo.setPatient(patient);
+
+        model.addAttribute("medicalInfo", medicalInfo);
+        model.addAttribute("patient", patient);
+
+        return "new-medical-info";
     }
+
 
     /**
      * Crée une nouvelle information médicale.
@@ -94,8 +106,16 @@ public class MedicalInfoController {
      */
     @PostMapping
     public String createMedicalInfo(@ModelAttribute MedicalInfo medicalInfo) {
+    	
+    	// Ajout automatique de la date actuelle avant la sauvegarde
+        medicalInfo.setDateAdded(new Date()); // ça crée une date au format timestamp automatiquement
+
         medicalInfoRepository.save(medicalInfo);
-        return "redirect:/medical-info";
+        
+        // Récupérer l'id du patient associé
+        int patientId = medicalInfo.getPatient().getPatientId();
+
+        return "redirect:/patients/edit/" + patientId;
     }
 
     /**

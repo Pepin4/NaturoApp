@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -186,10 +187,49 @@ public class AppointmentController {
         // Récupérer l'utilisateur connecté
         User user = getAuthenticatedUser(principal);
 
-        // Enregistrement du rendez-vous
-        appointment.setUser(user);
-        appointment.setPatient(patient);
-        appointmentRepository.save(appointment);
+        // Vérifier si le patient a déjà un rendez-vous à cette date
+        if (appointmentRepository.existsByPatientAndDateTime(patient, appointment.getDateTime())) {
+            model.addAttribute("errorMessage", "Ce patient a déjà un rendez-vous à cette date.");
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("patient", patient);
+            model.addAttribute("address", address);
+            model.addAttribute("city", city);
+            model.addAttribute("country", country);
+            model.addAttribute("contact", contact);
+            return "new-appointment";
+        }
+
+        // Vérifier si l'utilisateur a déjà un rendez-vous à cette date
+        if (appointmentRepository.existsByUserAndDateTime(user, appointment.getDateTime())) {
+            model.addAttribute("errorMessage", "Vous avez déjà un rendez-vous à cette date.");
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("patient", patient);
+            model.addAttribute("address", address);
+            model.addAttribute("city", city);
+            model.addAttribute("country", country);
+            model.addAttribute("contact", contact);
+            return "new-appointment";
+        }
+        
+        // Enregistrement du rendez-vous avec gestion d'erreur
+        try {
+            appointment.setUser(user);
+            appointment.setPatient(patient);
+            appointmentRepository.save(appointment);
+        } catch (Exception e) {
+            // Log optionnel : e.printStackTrace();
+            model.addAttribute("errorMessage", "Erreur technique, réessayez plus tard");
+
+            // Réinjecter les données dans le modèle pour réafficher le formulaire
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("patient", patient);
+            model.addAttribute("address", address);
+            model.addAttribute("city", city);
+            model.addAttribute("country", country);
+            model.addAttribute("contact", contact);
+
+            return "new-appointment";
+        }
 
         return "redirect:/appointments";
     }
@@ -272,7 +312,15 @@ public class AppointmentController {
      */
     @GetMapping("/edit/{id}")
     public String editAppointmentForm(@PathVariable("id") int id, Model model) {
-        Appointment appointment = appointmentRepository.findById(id).get(); // Aucune gestion d'erreur ici
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        
+        if (!optionalAppointment.isPresent()) {
+            return "valid";
+        }
+
+        Appointment appointment = optionalAppointment.get();
+        model.addAttribute("appointment", appointment);
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         String formattedDate = dateFormat.format(appointment.getDateTime());
 
@@ -285,7 +333,6 @@ public class AppointmentController {
             issueSolutionMap.computeIfAbsent(issue, k -> new ArrayList<>()).add(solution);
         }
 
-        model.addAttribute("appointment", appointment);
         model.addAttribute("formattedDate", formattedDate);
         model.addAttribute("issueSolutionMap", issueSolutionMap);
 

@@ -1,6 +1,7 @@
 package be.gestion.naturopathie.dimitri.repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import be.gestion.naturopathie.dimitri.model.Appointment;
 import be.gestion.naturopathie.dimitri.model.Patient;
+import be.gestion.naturopathie.dimitri.model.User;
 
 
 
@@ -49,4 +51,23 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
      */
     @Query("SELECT a FROM Appointment a WHERE a.patient = :patient AND FUNCTION('DATE', a.dateTime) = :date")
     List<Appointment> findByPatientAndDate(@Param("patient") Patient patient, @Param("date") LocalDate date);
+    
+    /**
+     * Vérifie si un rendez-vous existe déjà pour un patient donné à une date et heure précises.
+     *
+     * @param patient Le patient concerné.
+     * @param dateTime La date et l'heure du rendez-vous.
+     * @return true si un rendez-vous existe déjà pour ce patient à ce moment-là, sinon false.
+     */
+    boolean existsByPatientAndDateTime(Patient patient, Date dateTime);
+
+    /**
+     * Vérifie si un rendez-vous existe déjà pour un utilisateur (praticien) donné à une date et heure précises.
+     *
+     * @param user L'utilisateur (praticien) concerné.
+     * @param dateTime La date et l'heure du rendez-vous.
+     * @return true si un rendez-vous existe déjà pour cet utilisateur à ce moment-là, sinon false.
+     */
+    boolean existsByUserAndDateTime(User user, Date dateTime);
+    
 }

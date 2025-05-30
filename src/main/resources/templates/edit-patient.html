@@ -38,21 +38,21 @@
                 <!-- Section Prénom -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Prénom <span style="color: red;">*</span></label>
-                    <input type="text" name="firstName" th:field="*{firstName}" id="firstName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="Le prénom doit contenir maximum 64 caractères." name="firstName" th:field="*{firstName}" id="firstName" class="form-control" style="width: 50%;">
                     <span class="error" id="firstNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Nom -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Nom <span style="color: red;">*</span></label>
-                    <input type="text" name="lastName" th:field="*{lastName}" id="lastName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="Le nom doit contenir maximum 64 caractères." name="lastName" th:field="*{lastName}" id="lastName" class="form-control" style="width: 50%;">
                     <span class="error" id="lastNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Date de Naissance -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="dateOfBirth" class="required" style="width: 200px;">Date de Naissance <span style="color: red;">*</span></label>
-                    <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control" style="width: 50%;">
+                    <input type="date" title="Veuillez sélectionner une date." name="dateOfBirth" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control" style="width: 50%;">
                     <span class="error" id="dateOfBirthError" style="color: red;"></span>
                 </div>
 
@@ -71,14 +71,14 @@
                 <!-- Section Situation Familiale -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Situation Familiale</label>
-                    <input type="text" name="familySituation" th:field="*{familySituation}" id="familySituation" class="form-control" style="width: 50%;">
+                    <input type="text"  maxlength="256" title="La situation familiale doit contenir maximum 256 caractères." name="familySituation" th:field="*{familySituation}" id="familySituation" class="form-control" style="width: 50%;">
                     <span class="error" id="familySituationError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Situation Professionnelle -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label style="width: 200px;">Situation Professionnelle</label>
-                    <input type="text" name="professionalSituation" th:field="*{professionalSituation}" id="professionalSituation" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="128" title="La situation professionnelle doit contenir maximum 128 caractères." name="professionalSituation" th:field="*{professionalSituation}" id="professionalSituation" class="form-control" style="width: 50%;">
                     <span class="error" id="professionalSituationError" style="color: red;"></span>
                 </div>
 
@@ -88,47 +88,47 @@
                 <!-- Section Numéro de téléphone -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="phoneNumber" style="width: 200px;">Numéro de téléphone</label>
-                    <input type="text" name="phoneNumber" th:field="*{contact.phoneNumber}" id="phoneNumber" class="form-control" style="width: 50%;">
+                    <input type="tel" pattern="^0[1-9][0-9]{8}$" title="Le numéro ne doit contenir ni lettres ni caractères spéciaux." name="phoneNumber" th:field="*{contact.phoneNumber}" id="phoneNumber" class="form-control" style="width: 50%;">
                 </div>
 
                 <!-- Section E-mail -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label for="email" style="width: 200px;">E-mail</label>
-                    <input type="email" name="email" th:field="*{contact.email}" id="email" class="form-control" style="width: 50%;">
+                    <input type="email"  title="Veuillez entrer une adresse email valide." name="email" th:field="*{contact.email}" id="email" class="form-control" style="width: 50%;">
                 </div>
 
                 <!-- Section Adresse - Numéro -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Numéro <span style="color: red;">*</span></label>
-                    <input type="text" name="number" th:field="*{address.number}" id="number" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="5" title="Le numéro doit contenir maximum 5 caractères." name="number" th:field="*{address.number}" id="number" class="form-control" style="width: 50%;">
                     <span class="error" id="numberError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Adresse - Rue -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Rue <span style="color: red;">*</span></label>
-                    <input type="text" name="street" th:field="*{address.street}" id="street" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="128" title="La rue doit contenir maximum 128 caractères." name="street" th:field="*{address.street}" id="street" class="form-control" style="width: 50%;">
                     <span class="error" id="streetError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Adresse - Code Postal -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Code Postal <span style="color: red;">*</span></label>
-                    <input type="text" name="cityCode" th:field="*{address.city.cityCode}" id="cityCode" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="10" title="Le code postal doit contenir maximum 10 caractères." name="cityCode" th:field="*{address.city.cityCode}" id="cityCode" class="form-control" style="width: 50%;">
                     <span class="error" id="cityCodeError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Adresse - Ville -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Ville <span style="color: red;">*</span></label>
-                    <input type="text" name="cityName" th:field="*{address.city.cityName}" id="cityName" class="form-control" style="width: 50%;">
+                    <input type="text" maxlength="64" title="La ville doit contenir maximum 64 caractères." name="cityName" th:field="*{address.city.cityName}" id="cityName" class="form-control" style="width: 50%;">
                     <span class="error" id="cityNameError" style="color: red;"></span>
                 </div>
 
                 <!-- Section Adresse - Pays -->
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <label class="required" style="width: 200px;">Pays <span style="color: red;">*</span></label>
-                    <select name="countryName" th:field="*{address.city.country.countryName}" id="countryName" class="form-control" style="width: 50%;">
+                    <select name="countryName" title="Veuillez sélectionner un pays." th:field="*{address.city.country.countryName}" id="countryName" class="form-control" style="width: 50%;">
                         <option th:each="country : ${countries}"
                                 th:value="${country.countryName}"
                                 th:text="${country.countryName}"
@@ -142,6 +142,39 @@
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <input type="hidden" name="countryCodeIso" th:field="*{address.city.country.isoCode}" id="countryCodeIso" class="form-control" style="width: 50%;">
                 </div>
+				
+				<div style="display: flex; justify-content: flex-end; margin-right: 15em; margin-bottom: 20px;">
+				    <a th:href="@{/medical-info/new(patientId=${patient.patientId})}" 
+				       class="btn btn-primary" 
+				       style="padding: 10px 20px; border-radius: 5px; text-align: center; text-decoration: none; display: inline-block;">
+				        Ajouter un antécédent médical
+				    </a>
+				</div>
+				
+				<div style="margin-top: 30px;">
+				  <h3>Infos médicales</h3>
+				  <div style="display: flex; justify-content: center;">
+				    <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
+				      <thead>
+				        <tr>
+				          <th style="padding: 10px; border: 1px solid #ddd;">Type</th>
+				          <th style="padding: 10px; border: 1px solid #ddd;">Description</th>
+				          <th style="padding: 10px; border: 1px solid #ddd;">Traitement</th>
+				          <th style="padding: 10px; border: 1px solid #ddd;">Date ajout</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr th:each="info : ${patient.medicalInfos}">
+				          <td th:text="${info.type}" style="padding: 10px; border: 1px solid #ddd;"></td>
+				          <td th:text="${info.description}" style="padding: 10px; border: 1px solid #ddd;"></td>
+				          <td th:text="${info.treatment}" style="padding: 10px; border: 1px solid #ddd;"></td>
+				          <td th:text="${#dates.format(info.dateAdded, 'dd/MM/yyyy')}" style="padding: 10px; border: 1px solid #ddd;"></td>
+				        </tr>
+				      </tbody>
+				    </table>
+				  </div>
+				</div>
+
 
                 <!-- Boutons pour mettre à jour ou supprimer le patient -->
                 <div class="form-actions mt-3" style="display: flex; justify-content: flex-end; gap: 15px; max-width: 73%; margin-right: 20px;">

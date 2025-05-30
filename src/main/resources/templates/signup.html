@@ -64,6 +64,9 @@
 	                </div>
 	                <div class="card-body">
 	                    
+						<!-- Message d'erreur si l'utilisateur existe déjà -->
+						<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+						
 	                    <!-- Formulaire d'inscription -->
 	                    <form action="/users/signup" method="post">
 	                        <!-- Inclusion d'un token CSRF pour la sécurité de l'application -->
@@ -72,55 +75,55 @@
 	                        <!-- Champ pour le nom d'utilisateur -->
 	                        <div class="mb-3">
 	                            <label for="username" class="form-label">Nom d'utilisateur</label>
-	                            <input type="text" id="username" name="username" class="form-control" required>
+	                            <input type="text" maxlength="64" title="Le nom d'utilisateur doit contenir maximum 64 caractères." id="username" name="username" class="form-control" required>
 	                        </div>
 
 	                        <!-- Champ pour le mot de passe -->
 	                        <div class="mb-3">
 	                            <label for="password" class="form-label">Mot de passe</label>
-	                            <input type="password" id="password" name="password" class="form-control" required>
+	                            <input type="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,64}" title="Le mot de passe doit contenir entre 8 et 64 caractères, dont au moins une lettre minuscule, une majuscule, un chiffre et un caractère spécial." id="password" name="password" class="form-control" required>
 	                        </div>
 
 	                        <!-- Champ pour le numéro de téléphone -->
 	                        <div class="mb-3">
 	                            <label for="phoneNumber" class="form-label">Numéro de téléphone</label>
-	                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control">
+	                            <input type="tel" pattern="^0[1-9][0-9]{8}$" title="Le numéro ne doit contenir ni lettres ni caractères spéciaux." id="phoneNumber" name="phoneNumber" class="form-control">
 	                        </div>
 
 	                        <!-- Champ pour l'adresse e-mail -->
 	                        <div class="mb-3">
 	                            <label for="email" class="form-label">Adresse e-mail</label>
-	                            <input type="email" id="email" name="email" class="form-control">
+	                            <input type="email"  title="Veuillez entrer une adresse email valide." id="email" name="email" class="form-control">
 	                        </div>
 
 	                        <!-- Champ pour le numéro de rue -->
 	                        <div class="mb-3">
 	                            <label for="number" class="form-label">Numéro de la rue</label>
-	                            <input type="text" id="number" name="number" class="form-control" required>
+	                            <input type="text" maxlength="5" title="Le numéro doit contenir maximum 5 caractères." id="number" name="number" class="form-control" required>
 	                        </div>
 
 	                        <!-- Champ pour le nom de la rue -->
 	                        <div class="mb-3">
 	                            <label for="street" class="form-label">Nom de la rue</label>
-	                            <input type="text" id="street" name="street" class="form-control" required>
+	                            <input type="text" maxlength="128" title="La rue doit contenir maximum 128 caractères." id="street" name="street" class="form-control" required>
 	                        </div>
 
 	                        <!-- Champ pour le code de la ville -->
 	                        <div class="mb-3">
 	                            <label for="cityCode" class="form-label">Code de la ville</label>
-	                            <input type="text" id="cityCode" name="cityCode" class="form-control" required>
+	                            <input type="text" maxlength="10" title="Le code postal doit contenir maximum 10 caractères." id="cityCode" name="cityCode" class="form-control" required>
 	                        </div>
 
 	                        <!-- Champ pour le nom de la ville -->
 	                        <div class="mb-3">
 	                            <label for="cityName" class="form-label">Nom de la ville</label>
-	                            <input type="text" id="cityName" name="cityName" class="form-control" required>
+	                            <input type="text" maxlength="64" title="La ville doit contenir maximum 64 caractères." id="cityName" name="cityName" class="form-control" required>
 	                        </div>
 
 	                        <!-- Sélecteur de pays avec une liste dynamique alimentée par un backend -->
 	                        <div class="mb-3">
 	                            <label for="countryName" class="form-label">Pays</label>
-	                            <select id="countryName" name="countryName" class="form-control" required>
+	                            <select id="countryName" title="Veuillez sélectionner un pays." name="countryName" class="form-control" required>
 	                                <!-- Liste des pays générée dynamiquement côté serveur -->
 	                                <option th:each="country : ${countries}" th:value="${country.countryName}" th:text="${country.countryName}"></option>
 	                            </select>

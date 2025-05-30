@@ -1,8 +1,14 @@
 package be.gestion.naturopathie.dimitri.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -95,6 +101,10 @@ public class Patient {
     @ManyToOne
     @JoinColumn(name = "fk_contact", nullable = false)
     private Contact contact;
+    
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<MedicalInfo> medicalInfos = new ArrayList<>();
 
 /**
 
@@ -238,6 +248,24 @@ public class Patient {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+	
+	public List<MedicalInfo> getMedicalInfos() {
+		return medicalInfos;
+	}
+
+	public void setMedicalInfos(List<MedicalInfo> medicalInfos) {
+		this.medicalInfos = medicalInfos;
+	}
+
+	public void addMedicalInfo(MedicalInfo medicalInfo) {
+		medicalInfos.add(medicalInfo);
+		medicalInfo.setPatient(this);
+	}
+
+	public void removeMedicalInfo(MedicalInfo medicalInfo) {
+		medicalInfos.remove(medicalInfo);
+		medicalInfo.setPatient(null);
 	}
 	
 	@Override

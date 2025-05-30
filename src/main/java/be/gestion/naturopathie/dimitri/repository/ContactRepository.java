@@ -47,4 +47,8 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
      * @return le contact correspondant s'il existe, sinon null.
      */
     Contact findByPhoneNumberAndEmail(String phoneNumber, String email);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByPhoneNumber(String phoneNumber);
 }

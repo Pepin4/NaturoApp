@@ -35,17 +35,17 @@
         <!-- Section pour saisir le nom de la solution -->
         <div class="form-group">
             <!-- Label pour le champ 'solutionRemedy' avec un indicateur '*' pour montrer que le champ est obligatoire -->
-            <label for="solutionRemedy">Nom de la solution <span class="required">*</span></label>
+            <label for="solutionRemedy">Nom de la solution <span class="required" style="color: red;">*</span></label>
             <!-- Champ de texte pour le nom de la solution, avec une classe CSS pour appliquer le style de formulaire -->
-            <input id="solutionRemedy" name="solutionRemedy" class="form-control required-field" placeholder="Nom de la solution">
+            <input type="text" maxlength="256" title="Le nom de la solution doit contenir maximum 256 caractères." id="solutionRemedy" name="solutionRemedy" class="form-control required-field" placeholder="Nom de la solution">
             <!-- Zone d'affichage pour les erreurs liées au champ -->
             <span id="solutionRemedyError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour saisir les bénéfices de la solution -->
         <div class="form-group">
-            <label for="solutionBenefit">Bénéfices <span class="required">*</span></label>
-            <input id="solutionBenefit" name="solutionBenefit" class="form-control required-field" placeholder="Bénéfices">
+            <label for="solutionBenefit">Bénéfices <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="1024" title="Les bénéfices doit contenir maximum 1024 caractères." id="solutionBenefit" name="solutionBenefit" class="form-control required-field" placeholder="Bénéfices">
             <span id="solutionBenefitError" class="error" style="color: red;"></span>
         </div>
 
@@ -53,9 +53,13 @@
         <h4>Ajouter ou associer un fournisseur</h4>
 
         <!-- Champ de recherche de fournisseur avec auto-complétion -->
-        <label for="supplierNameSearch">Recherche fournisseur</label>
+        <label>Recherche fournisseur</label>
         <input type="text" id="supplierNameSearch" class="form-control" autocomplete="off" placeholder="Recherchez un fournisseur...">
 
+		<!-- Affichage des erreurs liées à la sélection du patient -->
+		<span class="error" id="supplierError" style="color: red; margin-top: 5px; display: block;" aria-live="polite"></span>
+
+		
         <!-- Sélecteur pour afficher un fournisseur parmi les résultats de la recherche -->
         <label for="supplierNameSelect"></label>
         <select id="supplierNameSelect" class="form-control" name="supplierId">
@@ -64,57 +68,57 @@
 
         <!-- Section pour saisir le nom du fournisseur -->
         <div class="form-group">
-            <label for="supplierName">Nom du fournisseur <span class="required">*</span></label>
-            <input id="supplierName" name="supplierName" class="form-control required-field" placeholder="Nom du fournisseur">
+            <label for="supplierName">Nom du fournisseur <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="64" title="Le nom du fournisseur doit contenir maximum 64 caractères." id="supplierName" name="supplierName" class="form-control required-field" placeholder="Nom du fournisseur">
             <span id="supplierNameError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour saisir le numéro de téléphone du fournisseur -->
         <div class="form-group">
             <label for="contactNumber">Numéro de téléphone</label>
-            <input id="contactNumber" name="contactNumber" class="form-control" placeholder="Numéro de téléphone">
+            <input type="tel" pattern="^0[1-9][0-9]{8}$" title="Le numéro ne doit contenir ni lettres ni caractères spéciaux." id="contactNumber" name="contactNumber" class="form-control" placeholder="Numéro de téléphone">
         </div>
 
         <!-- Section pour saisir l'email de contact du fournisseur -->
         <div class="form-group">
             <label for="contactEmail">Email de contact</label>
-            <input id="contactEmail" name="contactEmail" class="form-control" placeholder="Email de contact">
+            <input type="email"  title="Veuillez entrer une adresse email valide." id="contactEmail" name="contactEmail" class="form-control" placeholder="Email de contact">
         </div>
         <!-- Zone d'affichage des erreurs liées aux champs de contact -->
         <span id="contactError" class="error" style="color: red; display: block; margin-bottom: 15px;"></span>
 
         <!-- Section pour saisir l'adresse du fournisseur -->
         <div class="form-group">
-            <label for="addressNumber">Numéro de l'adresse <span class="required">*</span></label>
-            <input id="addressNumber" name="addressNumber" class="form-control required-field" placeholder="Numéro de l'adresse">
+            <label for="addressNumber">Numéro de l'adresse <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="5" title="Le numéro doit contenir maximum 5 caractères." id="addressNumber" name="addressNumber" class="form-control required-field" placeholder="Numéro de l'adresse">
             <span id="addressNumberError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour saisir la rue de l'adresse -->
         <div class="form-group">
-            <label for="addressStreet">Rue <span class="required">*</span></label>
-            <input id="addressStreet" name="addressStreet" class="form-control required-field" placeholder="Rue">
+            <label for="addressStreet">Rue <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="128" title="La rue doit contenir maximum 128 caractères." id="addressStreet" name="addressStreet" class="form-control required-field" placeholder="Rue">
             <span id="addressStreetError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour saisir le code postal -->
         <div class="form-group">
-            <label for="cityCode">Code postal <span class="required">*</span></label>
-            <input id="cityCode" name="cityCode" class="form-control required-field" placeholder="Code postal">
+            <label for="cityCode">Code postal <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="10" title="Le code postal doit contenir maximum 10 caractères." id="cityCode" name="cityCode" class="form-control required-field" placeholder="Code postal">
             <span id="cityCodeError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour saisir le nom de la ville -->
         <div class="form-group">
-            <label for="cityName">Ville <span class="required">*</span></label>
-            <input id="cityName" name="cityName" class="form-control required-field" placeholder="Ville">
+            <label for="cityName">Ville <span class="required" style="color: red;">*</span></label>
+            <input type="text" maxlength="64" title="La ville doit contenir maximum 64 caractères." id="cityName" name="cityName" class="form-control required-field" placeholder="Ville">
             <span id="cityNameError" class="error" style="color: red;"></span>
         </div>
 
         <!-- Section pour sélectionner le pays via une liste déroulante -->
         <div class="form-group">
-            <label for="country">Pays <span class="required">*</span></label>
-            <select id="country" name="countryId" class="form-control required-field" style="width: 80%;">
+            <label for="country">Pays <span class="required" style="color: red;">*</span></label>
+            <select id="country" name="countryId" title="Veuillez sélectionner un pays." class="form-control required-field" style="width: 80%;">
                 <option value="">-- Sélectionner un pays --</option>
                 <!-- Boucle Thymeleaf pour afficher les pays disponibles -->
                 <option th:each="country : ${countries}" 

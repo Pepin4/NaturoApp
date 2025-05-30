@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sélection des éléments nécessaires pour la recherche et le formulaire
     const patientSearchInput = document.getElementById('patientSearch');
     const patientSelect = document.getElementById('patientSelect');
+	const patientErrorSpan = document.getElementById('patientError');
+	
+	patientSelect.style.display = 'none';
 
     // Gestion de la soumission du formulaire de rendez-vous
     document.getElementById('appointmentForm').addEventListener('submit', function(event) {
@@ -87,10 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Si aucun patient n'est trouvé, afficher un message
                     if (patients.length === 0) {
-                        const noPatientOption = document.createElement('option');
-                        noPatientOption.textContent = 'Aucun patient trouvé';
-                        patientSelect.appendChild(noPatientOption);
+						patientSelect.style.display = "none";
+						patientErrorSpan.textContent = 'Aucun patient ne correspond à votre recherche.';
                     } else if (patients.length === 1) {
+						patientSelect.style.display = "block";
                         // Si un seul patient est trouvé, le sélectionner directement et remplir les champs
                         const option = document.createElement('option');
                         option.value = `${patients[0].firstName} ${patients[0].lastName}`;
@@ -113,7 +116,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         // Remplir directement les champs avec les informations du patient
                         fillPatientFields(patients[0]);
+						patientErrorSpan.textContent = '';
                     } else {
+						// Afficher la liste des patients trouvés
+						patientSelect.style.display = 'block';
+
                         // Si plusieurs patients sont trouvés, afficher la liste des options
                         patients.forEach(patient => {
                             const option = document.createElement('option');
@@ -134,14 +141,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             option.dataset.cityName = patient.address?.city?.cityName;
                             option.dataset.countryId = patient.address?.city?.country?.countryId;
                             patientSelect.appendChild(option);
+							patientErrorSpan.textContent = '';
                         });
                     }
-
-                    // Afficher la liste des patients trouvés
-                    patientSelect.style.display = 'block';
                 })
                 .catch(err => {
-                    alert("Une erreur est survenue lors de la recherche.");
+					patientSelect.style.display = "none";
+					patientErrorSpan.textContent = "Une erreur est survenue lors de la recherche.";
                 });
         } else {
             // Si la recherche est trop courte, masquer la liste déroulante

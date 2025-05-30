@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      data-layout-decorate="layout">
+<head>
+	 <!-- 
+		 _   _                                    _ _           _   _        __      
+		| \ | |                                  | (_)         | | (_)      / _|     
+		|  \| | _____      __  _ __ ___   ___  __| |_  ___ __ _| |  _ _ __ | |_ ___  
+		| . ` |/ _ \ \ /\ / / | '_ ` _ \ / _ \/ _` | |/ __/ _` | | | | '_ \|  _/ _ \ 
+		| |\  |  __/\ V  V /  | | | | | |  __/ (_| | | (_| (_| | | | | | | | || (_) |
+		|_| \_|\___| \_/\_/   |_| |_| |_|\___|\__,_|_|\___\__,_|_| |_|_| |_|_| \___/ 
+		                                                                                                    
+	  -->
+    <meta charset="UTF-8">
+    <title>Ajouter une Information Médicale</title>
+</head>
+<body>
+<div data-layout-fragment="content">
+    <h4>Ajouter une Information Médicale</h4>
+
+    <form id="medicalInfoForm" th:action="@{/medical-info}" method="post" style="width: 80%; margin: auto;">
+        <div th:replace="~{layout :: csrf}"></div>
+
+        <!-- Type -->
+        <div class="form-group">
+            <label for="type">Type d'information médicale <span class="required" style="color: red;">*</span></label>
+            <select id="type" name="type" class="form-control required-field" required>
+                <option value="">-- Sélectionner un type --</option>
+                <option value="antecedents_familiaux">Antécédents familiaux</option>
+                <option value="allergie_connue">Allergie connue</option>
+                <option value="antecedents_medicaux">Antécédents médicaux</option>
+                <option value="traitement_en_cours">Traitement en cours</option>
+                <option value="desordre_recurrent">Désordre récurrent</option>
+            </select>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description <span class="required" style="color: red;">*</span></label>
+            <textarea id="description" name="description" class="form-control required-field" rows="3" type="text" maxlength="256" title="La description doit contenir maximum 256 caractères." placeholder="Décrivez l'information médicale" required></textarea>
+        </div>
+
+        <!-- Traitement (optionnel) -->
+        <div class="form-group">
+            <label for="treatment">Traitement (si applicable)</label>
+            <input id="treatment" name="treatment" class="form-control" type="text" maxlength="128" title="Le Traitement doit contenir maximum 128 caractères." placeholder="Traitement associé (facultatif)">
+        </div>
+		
+		<input type="hidden" name="patient.patientId" th:value="${medicalInfo.patient.patientId}" />
+
+        <!-- Bouton de soumission -->
+        <div style="flex: 1; display: flex; justify-content: flex-end; margin-top: 20px;">
+            <button type="submit" class="btn btn-success">Ajouter l'information médicale</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

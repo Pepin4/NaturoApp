@@ -124,7 +124,8 @@ public class UserController {
 
         // 1. Vérifie si le nom d'utilisateur est déjà utilisé
         if (userRepository.existsByUserName(username)) {
-            model.addAttribute("error", "Le nom d'utilisateur est déjà pris.");
+            model.addAttribute("error", "Le nom d'utilisateur est déjà utilisé.");
+            model.addAttribute("countries", countryRepository.findAll());
             return "signup";
         }
 
@@ -154,6 +155,20 @@ public class UserController {
             address.setNumber(number);
             address.setCity(city);
             address = addressRepository.save(address);
+        }
+        
+     // 1.1 Vérifie si l'e-mail est déjà utilisé
+        if (contactRepository.existsByEmail(email)) {
+            model.addAttribute("error", "L'adresse e-mail est déjà utilisée.");
+            model.addAttribute("countries", countryRepository.findAll());
+            return "signup";
+        }
+
+        // 1.2 Vérifie si le numéro de téléphone est déjà utilisé
+        if (contactRepository.existsByPhoneNumber(phoneNumber)) {
+            model.addAttribute("error", "Le numéro de téléphone est déjà utilisé.");
+            model.addAttribute("countries", countryRepository.findAll());
+            return "signup";
         }
 
         // 5. Récupération ou création du contact

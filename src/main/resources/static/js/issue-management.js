@@ -154,10 +154,12 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addNewSolution = function () {
         const issueId = document.querySelector('[name="issueId"]').value;
         const appointmentId = document.querySelector('[name="appointmentId"]').value;
+		const issueError = document.getElementById('issueError');
 
+		issueError.textContent = '';
         // Vérifie si un problème est sélectionné avant d'ajouter une solution
         if (!issueId || issueId === '0') {
-            alert('Veuillez sélectionner un problème avant d\'ajouter une solution.');
+			issueError.textContent = 'Veuillez sélectionner un problème avant d\'ajouter une solution.';
             return;
         }
 
@@ -173,20 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("issueForm").addEventListener("submit", function(event) {
         const issueId = document.querySelector('[name="issueId"]').value;
         const selectedSolutions = document.querySelectorAll('input[name="solutions"]:checked');
-        
-        // Vérifie si un problème est sélectionné avant de soumettre le formulaire
-        if (!issueId || issueId === '0') {
-            alert('Veuillez sélectionner un problème avant d\'enregistrer.');
-            event.preventDefault();
-            return;
-        }
 
-        // Vérifie si au moins une solution est sélectionnée avant de soumettre le formulaire
-        if (selectedSolutions.length === 0) {
-            alert('Veuillez sélectionner au moins une solution avant d\'enregistrer.');
-            event.preventDefault();
-            return;
-        }
     });
 
     // Initialisation de la table des solutions avec DataTables pour la pagination et la recherche
