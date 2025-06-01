@@ -149,11 +149,16 @@
 
             <!-- Resources plugin -->
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-resources-plugin</artifactId>
+			    <configuration>
+			        <encoding>UTF-8</encoding>
+			        <useDefaultDelimiters>true</useDefaultDelimiters>
+			        <nonFilteredFileExtensions>
+			            <nonFilteredFileExtension>properties</nonFilteredFileExtension>
+			        </nonFilteredFileExtensions>
+			    </configuration>
+			</plugin>
 
             <!-- Spring Boot plugin -->
             <plugin>
