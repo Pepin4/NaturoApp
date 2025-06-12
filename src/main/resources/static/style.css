@@ -8,134 +8,54 @@
     font-family: 'Oswald', sans-serif;
 }
 
-input[type="checkbox"] {
-    display: none;
-}
-
 /* =======================
-   MENU BOUTON
+   HEADER & NAVIGATION
 ======================= */
-.menu-btn {
-    position: absolute;
-    z-index: 2;
-    right: 20px;
-    top: 20px;
-    height: 50px;
-    width: 50px;
-    text-align: center;
-    line-height: 50px;
-    border-radius: 50%;
-    font-size: 20px;
-    color: #fff;
-    cursor: pointer;
-    background: #000;
-    transition: all 0.3s ease-in-out;
+
+
+header {
+    background-color: #ffe4e1;
+    padding: 0px 40px;
+    height: auto;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
 }
 
-#open-menu:checked ~ .menu-btn {
-    color: #fff;
+.logo {
+    height: 70px;
+    width: auto;
 }
 
-#open-menu:checked ~ .menu-btn i:before {
-    content: "\f00d";
+nav {
+    margin-left: auto; /* pousse la nav complètement à droite */
 }
 
-/* =======================
-   MENU ANIMÉ (WRAPPER)
-======================= */
-.wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: #000;
-    clip-path: circle(25px at calc(100% - 45px) 45px);
-    transition: all 0.3s ease-in-out;
-    z-index: 1;
-}
-
-#open-menu:checked ~ .wrapper {
-    clip-path: circle(75%);
-}
-
-/* =======================
-   MENU PRINCIPAL
-======================= */
-.wrapper ul {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+nav ul {
+    display: flex;
+    gap: 30px;
     list-style: none;
-    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
-.wrapper ul li {
-    margin: 15px 0;
-    position: relative;
-}
-
-.wrapper ul li a {
+nav ul li a {
+    color: black;
     text-decoration: none;
-    font-size: 30px;
+    font-family: 'Oswald', sans-serif;
     font-weight: 500;
-    padding: 5px 30px;
-    color: #fff;
-    border-radius: 50px;
-    background: #000;
-    line-height: 50px;
-    position: relative;
-    transition: all 0.3s ease;
+    font-size: 18px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.wrapper ul li a:after {
-    content: "";
-    position: absolute;
-    width: 104%;
-    height: 110%;
-    left: -2%;
-    top: -5%;
-    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
-    border-radius: 50px;
-    transform: scaleY(0);
-    z-index: -1;
-    animation: rotate 1.5s linear infinite;
-    transition: transform 0.3s ease;
+nav ul li a:hover {
+    background-color: #f8cdd0;
 }
 
-.wrapper ul li a:hover:after {
-    transform: scaleY(1);
-}
-
-.wrapper ul li a:hover {
-    color: #fff;
-}
-
-/* Sous-menu */
-.wrapper ul li ul {
-    position: absolute;
-    top: 125%;
-    left: 0;
-    display: none;
-    background: #000;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.wrapper ul li:hover ul {
-    display: block;
-}
-
-/* Animation */
-@keyframes rotate {
-    0% {
-        filter: hue-rotate(0deg);
-    }
-    100% {
-        filter: hue-rotate(360deg);
-    }
-}
 
 /* =======================
    SECTION GESTION (Menu vertical)
@@ -293,6 +213,7 @@ input[type="checkbox"] {
     cursor: pointer;
     border: none;
     transition: background-color 0.3s ease;
+    margin-top: 15px; /* MARGE AU-DESSUS DES BOUTONS */
 }
 
 .btn-primary {

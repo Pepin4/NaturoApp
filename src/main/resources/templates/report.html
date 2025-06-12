@@ -157,9 +157,17 @@
 <body>
     <h1>Rapport du Rendez-vous</h1>
 	
-	<p style="text-align: center;"><strong>Patient :</strong> 
-		<span th:text="${patient.firstName} + ' ' + ${patient.lastName} + ' - Né(e) le ' + ${#dates.format(patient.dateOfBirth, 'dd/MM/yyyy')}"></span>
-	</p>
+	<div class="section" id="practitionerSection" style="text-align: center;">
+		<p><strong>Spécialiste :</strong> <span th:text="${appointment.user.userName}"></span></p>
+		<p><strong>Email :</strong> <span th:text="${appointment.user.contact.email}"></span></p>
+		<p><strong>Téléphone :</strong> <span th:text="${appointment.user.contact.phoneNumber}"></span></p>
+		<p><strong>Adresse :</strong> <span th:text="${appointment.user.address.number} + ' ' + ${appointment.user.address.street}"></span></p>
+		<p><span th:text="${appointment.user.address.city.cityName}"></span> <span th:text="${appointment.user.address.city.country.countryName}"></span></p>
+	
+		<p><strong>Patient :</strong> 
+			<span th:text="${patient.firstName} + ' ' + ${patient.lastName} + ' - Né(e) le ' + ${#dates.format(patient.dateOfBirth, 'dd/MM/yyyy')}"></span>
+		</p>
+	</div>
 
 
     <!-- Case à cocher pour sélectionner les sections à imprimer -->

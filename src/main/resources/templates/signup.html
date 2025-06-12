@@ -128,6 +128,14 @@
 	                                <option th:each="country : ${countries}" th:value="${country.countryName}" th:text="${country.countryName}"></option>
 	                            </select>
 	                        </div>
+							
+							<!-- Case à cocher pour accepter les CGU -->
+							<div class="mb-3 form-check">
+							  <input type="checkbox" class="form-check-input" id="acceptTerms" name="acceptTerms" required>
+							  <label class="form-check-label" for="acceptTerms">
+							    J’accepte les <a href="/cgu" target="_blank" rel="noopener">Conditions Générales d’Utilisation</a>
+							  </label>
+							</div>
 
 	                        <!-- Bouton d'envoi du formulaire -->
 	                        <div class="d-flex justify-content-end">

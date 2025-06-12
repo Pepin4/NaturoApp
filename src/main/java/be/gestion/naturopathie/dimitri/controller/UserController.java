@@ -189,6 +189,6 @@ public class UserController {
         userRepository.save(user);
 
         // Redirection vers login avec un message de succès
-        return "redirect:/login?signup=success";
+        return "redirect:/users/login?signup=success";
     }
 }

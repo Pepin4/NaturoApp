@@ -61,8 +61,7 @@ public class PatientIssueStatisticsRepository {
                      "JOIN issue_solution is1 ON ais.fk_issue_solution = is1.is_id " +
                      "JOIN issue i ON is1.fk_issue = i.i_id " +
                      "GROUP BY i.i_name " +
-                     "ORDER BY patient_count DESC " +
-                     "LIMIT 20";
+                     "ORDER BY patient_count DESC ";
 
         return jdbcTemplate.queryForList(sql);
     }

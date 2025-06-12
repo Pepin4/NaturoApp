@@ -32,6 +32,7 @@ public class SecurityConfig {
     private static final String[] PUBLIC_URLS = {
         "/users/login",
         "/users/signup",
+        "/cgu",
         "/style.css",
         "/avocat.png"
     };
